@@ -27,19 +27,26 @@ Stable unpacked ID (from the public `key` in `manifest.json`): `kdkfebaeaekpkbbm
 
 To pick up file changes, click **Reload** on the extension card. Refreshing Tweakers alone is not enough.
 
-## Chrome Web Store
+## Chrome Web Store and Edge Add-ons
 
-This repo is the source for a store listing. A Cursor/Grok Bot agent can follow [docs/CHROME_WEB_STORE.md](docs/CHROME_WEB_STORE.md).
+This Origin repo is the source for store listing drafts. Do not submit, pay, or publish from a draft wave.
 
-Pack a zip without the unpacked `key` field:
+- Chrome Web Store: [docs/CHROME_WEB_STORE.md](docs/CHROME_WEB_STORE.md)
+- Microsoft Edge Add-ons: [docs/EDGE_ADDONS.md](docs/EDGE_ADDONS.md)
+
+Pack a zip without the unpacked `key` field (same zip for both stores):
 
 ```powershell
 powershell -File .\scripts\pack-cws.ps1
 ```
 
+That writes `dist/tweakers-hide-users.zip` and runs [scripts/check-package.ps1](scripts/check-package.ps1), which fails if `manifest.json` is not at the zip root or if the unpacked `key` field is still present.
+
 ## Privacy
 
 Hide names stay in `chrome.storage` on your profile. See [PRIVACY.md](PRIVACY.md).
+
+Contact and issues: [Origin repo](https://cursor.com/codebase/spot-cloud/tweakers-hide-users). The privacy policy is `PRIVACY.md` at the repository root on that page.
 
 ## License
 

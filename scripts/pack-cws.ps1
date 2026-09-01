@@ -39,3 +39,4 @@ $manifest | ConvertTo-Json -Depth 10 | Set-Content -Path (Join-Path $stage 'mani
 if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -Force
 Write-Host "Wrote $zip"
+& (Join-Path $PSScriptRoot 'check-package.ps1')

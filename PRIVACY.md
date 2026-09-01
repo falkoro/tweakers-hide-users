@@ -38,4 +38,8 @@ Remove a name with Unhide, clear the list in the popup, or uninstall the extensi
 
 ## Contact
 
-Open an issue on the GitHub repository that hosts this extension.
+Open a pull request or comment on the Origin repository that hosts this extension:
+
+https://cursor.com/codebase/spot-cloud/tweakers-hide-users
+
+This privacy policy is `PRIVACY.md` at the root of that repository.
