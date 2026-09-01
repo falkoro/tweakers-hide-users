@@ -1,0 +1,11 @@
+dist/
+*.zip
+*.crx
+*.pem
+*.nupkg
+Thumbs.db
+Desktop.ini
+.DS_Store
+node_modules/
+.vscode/
+.idea/

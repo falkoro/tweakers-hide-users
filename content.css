@@ -1,0 +1,99 @@
+html.thu-on div.message:not(.thu-ready):not(.thu-hidden),
+html.thu-on table.message:not(.thu-ready):not(.thu-hidden),
+html.thu-on .reactieBody:not(.thu-ready):not(.thu-hidden),
+html.thu-on article.reactie:not(.thu-ready):not(.thu-hidden),
+html.thu-on div.reactie:not(.thu-ready):not(.thu-hidden) {
+  visibility: hidden !important;
+}
+
+.thu-action {
+  overflow: visible;
+}
+
+.thu-hide-btn,
+.thu-unhide-btn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--tertiary-paragraph-text-color, #505962);
+  cursor: pointer;
+  font: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+p.username + .thu-hide-btn,
+p.username + .thu-unhide-btn,
+.userheader .thu-hide-btn,
+.userheader .thu-unhide-btn {
+  margin-left: 0.5rem;
+  font-size: var(--font-size-extra-small, 0.8125rem);
+}
+
+.thu-hide-btn:hover,
+.thu-unhide-btn:hover {
+  color: var(--text-link-color, #004d99);
+  background: transparent;
+  text-decoration: underline;
+}
+
+.thu-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: var(--spacing-small, 0.4rem) var(--spacing-medium, 0.75rem);
+  margin: 0 0 0.75rem;
+  font-family: var(--font-family-body, inherit);
+  font-size: var(--font-size-extra-small, 0.8125rem);
+  line-height: var(--line-height-content, 1.4);
+  color: var(--secondary-paragraph-text-color, #2e3338);
+  background: var(--surface-info-color, #edf2fb);
+  border: 0;
+  border-radius: var(--border-radius-small, 2px);
+}
+
+.thu-bar button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-link-color, #004d99);
+  cursor: pointer;
+  font: inherit;
+  font-size: inherit;
+}
+
+.thu-bar button:hover {
+  color: var(--text-link-hover-color, #a11236);
+  background: transparent;
+  text-decoration: underline;
+}
+
+.thu-hidden:not(.thu-peek) > .messagecontent,
+.thu-hidden:not(.thu-peek) > .reactieContent,
+.thu-hidden:not(.thu-peek) > .poster,
+.thu-hidden:not(.thu-peek) > .post,
+.thu-hidden:not(.thu-peek) > .messageheader,
+.thu-hidden:not(.thu-peek) > .clear,
+.thu-hidden:not(.thu-peek) .messagefooter,
+.thu-hidden:not(.thu-peek) .reactieFooter,
+.thu-hidden:not(.thu-peek) .messageheader .thumb,
+.thu-hidden:not(.thu-peek) .usericons,
+.thu-hidden:not(.thu-peek) .message-options {
+  display: none !important;
+}
+
+.thu-note-hidden,
+.listing-content > .thu-note-hidden,
+twk-sidebar .thu-note-hidden,
+twk-site-menu-user-notifications .thu-note-hidden {
+  display: none !important;
+}
+
+.thu-quote-hidden {
+  display: none !important;
+}

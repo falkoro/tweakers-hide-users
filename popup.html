@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tweakers Hide Users</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <h1>Hidden users</h1>
+    <p id="page-status" class="hint">Open a Tweakers page, then click Enable on this page if Hide is missing.</p>
+    <button id="enable-page" type="button">Enable on this page</button>
+    <p class="hint">
+      Look for <strong>Hide</strong> in the Acties row of each post.
+    </p>
+    <div class="add-row">
+      <input id="new-user" type="text" placeholder="Username" autocomplete="off" />
+      <button id="add-user" type="button">Add</button>
+    </div>
+    <ul id="user-list"></ul>
+    <p id="empty" class="empty">Nobody hidden yet.</p>
+    <h2>Config list</h2>
+    <p class="hint">One username per line. Save to apply.</p>
+    <textarea id="config" spellcheck="false" placeholder="User1&#10;User2"></textarea>
+    <div class="btn-row">
+      <button id="save-config" type="button">Save list</button>
+      <button id="export-json" type="button" class="secondary">Export JSON</button>
+      <label class="secondary file-label">
+        Import JSON
+        <input id="import-json" type="file" accept="application/json,.json,.txt" hidden />
+      </label>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

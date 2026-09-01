@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Tweakers Hide Users",
+  "version": "1.3.3",
+  "description": "Hide posts, quotes, tracker rows, and notifications from specific Tweakers users. Click Hide next to a name, or manage the list in the popup.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tweakers Hide Users",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://tweakers.net/*",
+    "https://*.tweakers.net/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://tweakers.net/*",
+        "https://*.tweakers.net/*"
+      ],
+      "js": [
+        "boot.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwJZs5MzR9SvGAFFomlsrBA13QDkaggTQyDbagEEj5Fp1/8YSdSK6gIY0d0/DWAz5lE634JU8TZc/5BbuZkbM8SBHckeYGNST/a1PcirkHktygn5wlO8R5atMycIvxs9+0KIHN/ew4Anu8tJR+bo7Xpy4TvAv53ZM19R9HCU2hiXQrejU1cD8IDTljC48e30915hg/ekbCSYwio/0Z7XGqvPplR6N8InSfm5D8pa8h97FEh/9lBmAPJPbn2YLx/mpwrT5i86rta/e+U59AtdYArdAx0d/r4PRmkIhBqeyTbpf4VyqqcmpYCMpXGCql9tjcTwfsoeVZLYNPf3bkXIypwIDAQAB"
+}
