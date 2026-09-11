@@ -4,6 +4,9 @@ Manifest V3 Edge/Chrome extension that hides Tweakers.net (Gathering of Tweakers
 
 There is no hardcoded block list. Hide is one click in the native Acties row. The list lives in your browser storage.
 
+This extension is not affiliated with, endorsed by, or sponsored by Tweakers.net, Tweakers B.V., or Gathering of Tweakers. It is an independent third-party browser extension.
+
+
 Current version: **1.3.3**
 
 ## What it does

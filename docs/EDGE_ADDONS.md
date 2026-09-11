@@ -57,6 +57,7 @@ How to use
 • Manage the list from the toolbar popup: add a name, paste one name per line, or export/import JSON.
 
 Notes
+• This extension is not affiliated with, endorsed by, or sponsored by Tweakers.net, Tweakers B.V., or Gathering of Tweakers. Independent third-party browser extension.
 • There is no built-in block list. Nobody is hidden until you hide them.
 • The list is stored in your browser (chrome.storage). It is not sent to the developer.
 • After you update the unpacked/dev copy, click Reload on the extension card. Refreshing Tweakers is not enough.
