@@ -6,29 +6,37 @@
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <h1>Hidden users</h1>
-    <p id="page-status" class="hint">Open a Tweakers page, then click Enable on this page if Hide is missing.</p>
-    <button id="enable-page" type="button">Enable on this page</button>
-    <p class="hint">
-      Look for <strong>Hide</strong> in the Acties row of each post.
-    </p>
+    <header class="head">
+      <img src="images/icon-48.png" width="28" height="28" alt="" />
+      <div>
+        <h1>Tweakers Hide Users</h1>
+        <p id="page-status" class="status">Open a Tweakers page to get started.</p>
+      </div>
+    </header>
+    <button id="enable-page" type="button" hidden>Enable on this page</button>
+    <p id="page-count" class="page-count" hidden></p>
+
     <div class="add-row">
-      <input id="new-user" type="text" placeholder="Username" autocomplete="off" />
-      <button id="add-user" type="button">Add</button>
+      <input id="new-user" type="text" placeholder="Add username" autocomplete="off" />
+      <button id="add-user" type="button">Hide</button>
     </div>
+    <input id="filter" type="search" placeholder="Filter list" hidden />
     <ul id="user-list"></ul>
-    <p id="empty" class="empty">Nobody hidden yet.</p>
-    <h2>Config list</h2>
-    <p class="hint">One username per line. Save to apply.</p>
-    <textarea id="config" spellcheck="false" placeholder="User1&#10;User2"></textarea>
-    <div class="btn-row">
-      <button id="save-config" type="button">Save list</button>
-      <button id="export-json" type="button" class="secondary">Export JSON</button>
-      <label class="secondary file-label">
-        Import JSON
-        <input id="import-json" type="file" accept="application/json,.json,.txt" hidden />
-      </label>
-    </div>
+    <p id="empty" class="empty">Nobody hidden yet. Click Hide under a post, or add a name here.</p>
+
+    <details class="bulk">
+      <summary>Paste list, export, import</summary>
+      <p class="hint">One username per line.</p>
+      <textarea id="config" spellcheck="false" placeholder="One username per line"></textarea>
+      <div class="btn-row">
+        <button id="save-config" type="button">Save list</button>
+        <button id="export-json" type="button" class="secondary">Export</button>
+        <label class="secondary file-label">
+          Import
+          <input id="import-json" type="file" accept="application/json,.json,.txt" hidden />
+        </label>
+      </div>
+    </details>
     <script src="popup.js"></script>
   </body>
 </html>

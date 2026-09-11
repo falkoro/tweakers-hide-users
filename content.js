@@ -423,7 +423,15 @@ window.__thuInit = true;
         applyAll();
       }
     });
-    chrome.runtime.onMessage.addListener((msg) => {
+    chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+      if (msg && msg.action === "get-stats") {
+        sendResponse({
+          ready: true,
+          hiddenPosts: document.querySelectorAll(".thu-hidden").length,
+          hiddenUsers: banned.length,
+        });
+        return;
+      }
       if (msg && msg.action === "update-settings") {
         loadBanned().then(applyAll);
       }

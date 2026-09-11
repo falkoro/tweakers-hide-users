@@ -9,7 +9,7 @@ As of 2026-08-29, Cursor staff (deanrie, forum thread 169684) said Grok Bot cann
 ## What this extension is
 
 - Name: Tweakers Hide Users
-- Manifest V3, version in `manifest.json` (currently 1.3.3)
+- Manifest V3, version in `manifest.json` (currently 1.4.0)
 - Single purpose: let the user hide Tweakers.net users in their own browser
 - Sites: `https://tweakers.net/*` and `https://*.tweakers.net/*` only
 - No hardcoded usernames. Do **not** seed MartijnA3, gjcvro, Bobmeister, or anyone else
@@ -32,11 +32,11 @@ First-time item **create** is dashboard upload or Chrome Web Store API **v1** `I
 
 From the repo root:
 
-```powershell
-powershell -File .\scripts\pack-cws.ps1
+```bash
+bash scripts/pack-cws.sh
 ```
 
-The zip root must contain `manifest.json` (no wrapping folder). Include `background.js`, `boot.js`, `content.js`, `content.css`, `popup.html`, `popup.js`, `popup.css`, `images/icon-16.png`, `images/icon-128.png`. Exclude `.git`, docs, scripts, LICENSE if you want a smaller zip; including README/PRIVACY in the zip is fine but not required.
+The zip root must contain `manifest.json` (no wrapping folder). Include `background.js`, `boot.js`, `content.js`, `content.css`, `popup.html`, `popup.js`, `popup.css`, `images/icon-16.png`, `images/icon-48.png`, `images/icon-128.png`. Exclude `.git`, docs, scripts, LICENSE if you want a smaller zip; including README/PRIVACY in the zip is fine but not required.
 
 Do not upload `.pem` private keys. This repo should not contain one.
 
@@ -92,8 +92,8 @@ If CWS rejects a blob URL, put the same text on a GitHub Pages URL or another HT
 
 ## Assets
 
-- Icons: `images/icon-128.png` (store), `images/icon-16.png` (toolbar). A 48px icon is optional; do not block publish on it.
-- Screenshots: at least one 1280x800 or 640x400 PNG of a Tweakers thread with Hide in the Acties row, plus the popup hide list. Capture from https://gathering.tweakers.net (cookie wall may appear). Do not include other people's private data beyond public forum posts.
+- Icons: `images/icon-128.png` (store), `images/icon-48.png`, `images/icon-16.png` (toolbar).
+- Screenshots: use the 1280x800 PNGs in `docs/store/` (page only, no extra browser tabs). Replace store media with those files. Capture from https://gathering.tweakers.net if you reshoot. Do not include other people's private data beyond public forum posts. Do not photograph a Chrome window with a pile of unrelated tabs.
 - Small promo tile optional.
 
 ## Review test notes

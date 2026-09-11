@@ -28,6 +28,7 @@ foreach ($f in $files) {
 
 New-Item -ItemType Directory -Path (Join-Path $stage 'images') | Out-Null
 Copy-Item (Join-Path $root 'images\icon-16.png') (Join-Path $stage 'images\icon-16.png')
+Copy-Item (Join-Path $root 'images\icon-48.png') (Join-Path $stage 'images\icon-48.png')
 Copy-Item (Join-Path $root 'images\icon-128.png') (Join-Path $stage 'images\icon-128.png')
 
 $manifest = Get-Content (Join-Path $root 'manifest.json') -Raw | ConvertFrom-Json

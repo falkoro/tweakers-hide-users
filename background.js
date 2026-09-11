@@ -1,8 +1,28 @@
 const URLS = ["https://tweakers.net/*", "https://*.tweakers.net/*"];
+const STORAGE_KEY = "bannedUsers";
 
 function isTweakers(url) {
   return typeof url === "string" && /https:\/\/([^.]+\.)?tweakers\.net\//i.test(url);
 }
+
+function updateBadge() {
+  chrome.storage.sync.get(STORAGE_KEY, (data) => {
+    const apply = (users) => {
+      const n = Array.isArray(users) ? users.length : 0;
+      chrome.action.setBadgeText({ text: n ? String(n) : "" });
+      chrome.action.setBadgeBackgroundColor({ color: "#8f1635" });
+    };
+    if (Array.isArray(data[STORAGE_KEY])) {
+      apply(data[STORAGE_KEY]);
+      return;
+    }
+    chrome.storage.local.get(STORAGE_KEY, (localData) => apply(localData[STORAGE_KEY]));
+  });
+}
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if ((area === "sync" || area === "local") && changes[STORAGE_KEY]) updateBadge();
+});
 
 async function inject(tabId) {
   try {
@@ -23,8 +43,15 @@ function injectOpenTabs() {
   });
 }
 
-chrome.runtime.onInstalled.addListener(injectOpenTabs);
-chrome.runtime.onStartup.addListener(injectOpenTabs);
+chrome.runtime.onInstalled.addListener(() => {
+  updateBadge();
+  injectOpenTabs();
+});
+chrome.runtime.onStartup.addListener(() => {
+  updateBadge();
+  injectOpenTabs();
+});
+updateBadge();
 
 chrome.tabs.onUpdated.addListener((tabId, info, tab) => {
   if (info.status === "complete" || info.url) injectTab(tab);
