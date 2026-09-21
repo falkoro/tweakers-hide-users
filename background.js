@@ -29,7 +29,7 @@ async function inject(tabId) {
     await chrome.scripting.insertCSS({ target: { tabId }, files: ["content.css"] });
   } catch (_) {}
   try {
-    await chrome.scripting.executeScript({ target: { tabId }, files: ["content.js"] });
+    await chrome.scripting.executeScript({ target: { tabId }, files: ["thu-core.js", "content.js"] });
   } catch (_) {}
 }
 

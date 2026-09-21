@@ -9,7 +9,7 @@ As of 2026-08-29, Cursor staff (deanrie, forum thread 169684) said Grok Bot cann
 ## What this extension is
 
 - Name: Tweakers Hide Users
-- Manifest V3, version in `manifest.json` (currently 1.4.0)
+- Manifest V3, version in `manifest.json` (currently 1.4.1)
 - Single purpose: let the user hide Tweakers.net users in their own browser
 - Sites: `https://tweakers.net/*` and `https://*.tweakers.net/*` only
 - No hardcoded usernames. Do **not** seed MartijnA3, gjcvro, Bobmeister, or anyone else
@@ -36,7 +36,7 @@ From the repo root:
 bash scripts/pack-cws.sh
 ```
 
-The zip root must contain `manifest.json` (no wrapping folder). Include `background.js`, `boot.js`, `content.js`, `content.css`, `popup.html`, `popup.js`, `popup.css`, `images/icon-16.png`, `images/icon-48.png`, `images/icon-128.png`. Exclude `.git`, docs, scripts, LICENSE if you want a smaller zip; including README/PRIVACY in the zip is fine but not required.
+The zip root must contain `manifest.json` (no wrapping folder). Include `background.js`, `boot.js`, `thu-core.js`, `content.js`, `content.css`, `popup.html`, `popup.js`, `popup.css`, `images/icon-16.png`, `images/icon-48.png`, `images/icon-128.png`. Exclude `.git`, docs, scripts, LICENSE if you want a smaller zip; including README/PRIVACY in the zip is fine but not required.
 
 Do not upload `.pem` private keys. This repo should not contain one.
 

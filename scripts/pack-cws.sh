@@ -12,6 +12,7 @@ mkdir -p "$stage/images"
 files=(
   background.js
   boot.js
+  thu-core.js
   content.js
   content.css
   popup.html
