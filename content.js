@@ -7,6 +7,26 @@ window.__thuInit = true;
     document.documentElement.classList.add("thu-on");
   } catch (_) {}
 
+  const Core = globalThis.ThuCore || {
+    isDirectMessagingUrl: (url) =>
+      /\/direct-messaging(?:\/|$)/i.test(String(url)) || /\/list_dmmessages(?:\/|$)/i.test(String(url)),
+    shouldFilterPage: (url) =>
+      !(/\/direct-messaging(?:\/|$)/i.test(String(url)) || /\/list_dmmessages(?:\/|$)/i.test(String(url))),
+    isDirectMessagingContext: (el) =>
+      !!(el && el.closest && el.closest('[class*="direct-messag"], [id*="direct-messag"], twk-direct-messaging')),
+    shouldHidePost: (opts) => {
+      const o = opts || {};
+      if (o.inDirectMessageUi) return false;
+      if (/\/direct-messaging(?:\/|$)/i.test(String(o.pageUrl)) || /\/list_dmmessages(?:\/|$)/i.test(String(o.pageUrl))) {
+        return false;
+      }
+      const n = String(o.username || "").trim().toLowerCase();
+      if (n && (o.bannedNames || []).some((u) => String(u).trim().toLowerCase() === n)) return true;
+      const id = String(o.ownerId || "").trim();
+      return !!id && (o.bannedIds || []).map(String).includes(id);
+    },
+  };
+
   const STORAGE_KEY = "bannedUsers";
   const IDS_KEY = "bannedUserIds";
   const MAP_KEY = "bannedIdByName";
@@ -311,21 +331,22 @@ window.__thuInit = true;
     bannedIds.forEach((id) => {
       if (!/^\d+$/.test(id)) return;
       const href = 'a[href*="/gallery/' + id + '"]';
-      const msg = 'div.message[data-owner-id="' + id + '"]:not(.thu-peek)';
+      const root = "html:not(.thu-dm) ";
+      const msg = root + 'div.message[data-owner-id="' + id + '"]:not(.thu-peek)';
       rules.push(
         msg + " > .poster",
         msg + " > .post",
         msg + " > .messageheader",
         msg + " > .clear",
         msg + " > .messagecontent",
-        "blockquote:has(" + href + ")",
-        "twk-sidebar li:has(" + href + ")",
-        "twk-sidebar tr:has(" + href + ")",
-        "twk-sidebar .item:has(" + href + ")",
-        "twk-site-menu-user-notifications .notification:has(" + href + ")",
-        "twk-site-menu-user-notifications .listing-content > *:has(" + href + ")",
-        ".listing-content .notification:has(" + href + ")",
-        "#userbar .listing-content > *:has(" + href + ")"
+        root + "blockquote:has(" + href + ")",
+        root + "twk-sidebar li:has(" + href + ")",
+        root + "twk-sidebar tr:has(" + href + ")",
+        root + "twk-sidebar .item:has(" + href + ")",
+        root + "twk-site-menu-user-notifications .notification:has(" + href + ")",
+        root + "twk-site-menu-user-notifications .listing-content > *:has(" + href + ")",
+        root + ".listing-content .notification:has(" + href + ")",
+        root + "#userbar .listing-content > *:has(" + href + ")"
       );
     });
     style.textContent = rules.length ? rules.join(",") + "{display:none!important}" : "";
@@ -333,6 +354,7 @@ window.__thuInit = true;
 
   function hideNotifications() {
     updateDynamicCss();
+    if (!Core.shouldFilterPage(location.href)) return;
 
     document.querySelectorAll(".notification, .notificatie").forEach((row) => {
       const hit = [...row.querySelectorAll("a[href*='/gallery/'], a.user, span.user")].some(isBannedEl);
@@ -352,21 +374,31 @@ window.__thuInit = true;
     );
     links.forEach((el) => {
       if (el.closest(".message, .reactieBody, article.reactie, .thu-bar, .thu-hide-btn, .thu-unhide-btn")) return;
+      if (Core.isDirectMessagingContext(el)) return;
       const row = closestNoteRow(el);
       if (!row || row.closest(".message, .reactieBody, article.reactie")) return;
+      if (Core.isDirectMessagingContext(row)) return;
       const hit = [...row.querySelectorAll("a.user, span.user, a[href*='/gallery/']")].some(isBannedEl);
       row.classList.toggle("thu-note-hidden", hit);
     });
   }
 
   function applyPost(post) {
+    const inDm = Core.isDirectMessagingContext(post);
     const username = usernameFromPost(post);
-    if (!username) {
+    if (!username || inDm) {
       post.classList.add("thu-ready");
+      if (inDm) post.classList.remove("thu-hidden", "thu-peek");
       return;
     }
     ensureHideButton(post, username);
-    const hidden = isBannedName(username) || isBannedId(ownerIdFromPost(post, username));
+    const hidden = Core.shouldHidePost({
+      username,
+      ownerId: ownerIdFromPost(post, username),
+      pageUrl: location.href,
+      bannedNames: banned,
+      bannedIds: bannedIds,
+    });
     post.classList.toggle("thu-hidden", hidden);
     post.classList.add("thu-ready");
     if (hidden) ensureBar(post, username);
@@ -382,10 +414,35 @@ window.__thuInit = true;
     }
   }
 
+  function syncPageMode() {
+    const dm = Core.isDirectMessagingUrl(location.href);
+    try {
+      document.documentElement.classList.toggle("thu-dm", dm);
+    } catch (_) {}
+    return dm;
+  }
+
+  function revealAllPosts() {
+    document.querySelectorAll(forumPostSelector + ", " + commentSelector).forEach((post) => {
+      post.classList.add("thu-ready");
+      post.classList.remove("thu-hidden", "thu-peek");
+      const bar = post.querySelector(":scope > .thu-bar");
+      if (bar) bar.remove();
+    });
+    document.querySelectorAll(".thu-note-hidden, .thu-quote-hidden").forEach((el) => {
+      el.classList.remove("thu-note-hidden", "thu-quote-hidden");
+    });
+  }
+
   function applyAll() {
     if (applying) return;
     applying = true;
     try {
+      if (syncPageMode()) {
+        updateDynamicCss();
+        revealAllPosts();
+        return;
+      }
       document.querySelectorAll(forumPostSelector).forEach(applyPost);
       document.querySelectorAll(commentSelector).forEach(applyPost);
       hideQuotes(document);

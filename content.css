@@ -1,8 +1,9 @@
-html.thu-on div.message:not(.thu-ready):not(.thu-hidden),
-html.thu-on table.message:not(.thu-ready):not(.thu-hidden),
-html.thu-on .reactieBody:not(.thu-ready):not(.thu-hidden),
-html.thu-on article.reactie:not(.thu-ready):not(.thu-hidden),
-html.thu-on div.reactie:not(.thu-ready):not(.thu-hidden) {
+html.thu-on:not(.thu-dm) div.message[data-owner-id]:not(.thu-ready):not(.thu-hidden),
+html.thu-on:not(.thu-dm) div.message[data-message-id]:not(.thu-ready):not(.thu-hidden),
+html.thu-on:not(.thu-dm) table.message:not(.thu-ready):not(.thu-hidden),
+html.thu-on:not(.thu-dm) .reactieBody:not(.thu-ready):not(.thu-hidden),
+html.thu-on:not(.thu-dm) article.reactie:not(.thu-ready):not(.thu-hidden),
+html.thu-on:not(.thu-dm) div.reactie:not(.thu-ready):not(.thu-hidden) {
   visibility: hidden !important;
 }
 

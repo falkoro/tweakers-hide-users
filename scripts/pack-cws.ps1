@@ -13,6 +13,7 @@ New-Item -ItemType Directory -Path $stage | Out-Null
 $files = @(
     'background.js',
     'boot.js',
+    'thu-core.js',
     'content.js',
     'content.css',
     'popup.html',

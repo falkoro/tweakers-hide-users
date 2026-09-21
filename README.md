@@ -4,12 +4,13 @@ Manifest V3 Edge/Chrome extension that hides Tweakers.net (Gathering of Tweakers
 
 There is no hardcoded block list. Hide is one click in the native Acties row. The list lives in your browser storage.
 
-Current version: **1.4.0**
+Current version: **1.4.1**
 
 ## What it does
 
 - Adds **Hide** / **Unhide** next to a poster's name in the Acties row, styled like Tweakers' own action links
 - Hides matching posts, quoted snippets, Tracker entries, and notification popup rows
+- Leaves Direct Messages alone (the `/direct-messaging/` inbox and threads stay visible)
 - Lets you peek a hidden post, then hide it again
 - Popup: add/remove names, paste a list, export/import JSON
 - Toolbar badge shows how many users you have hidden

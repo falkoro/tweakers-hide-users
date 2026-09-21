@@ -37,7 +37,7 @@ function notifyTabs() {
   chrome.tabs.query({ url: ["https://tweakers.net/*", "https://*.tweakers.net/*"] }, (tabs) => {
     for (const tab of tabs) {
       if (tab.id) {
-        chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["content.js"] }).catch(() => {});
+        chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["thu-core.js", "content.js"] }).catch(() => {});
         chrome.tabs.sendMessage(tab.id, { action: "update-settings" }).catch(() => {});
       }
     }
@@ -100,7 +100,7 @@ function injectCurrentTab() {
       return;
     }
     chrome.scripting.insertCSS({ target: { tabId: tab.id }, files: ["content.css"] }).catch(() => {});
-    chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["content.js"] }, () => {
+    chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["thu-core.js", "content.js"] }, () => {
       if (chrome.runtime.lastError) {
         setStatus("Could not enable. Reload the Tweakers tab and try again.", true);
         return;
