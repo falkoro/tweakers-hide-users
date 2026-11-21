@@ -1,10 +1,11 @@
 # Chrome Web Store publish brief
 
-This file is the handoff for Grok Bot / a Cursor cloud agent. Publish **Tweakers Hide Users** from this repo. Do not rewrite the hide logic unless review requires a store-policy fix.
+This file is the handoff for an agent. Draft **Tweakers Hide Users** for the Chrome Web Store from this repo. Do **not** submit, pay, or publish. Do not rewrite the hide logic unless review requires a store-policy fix.
 
-## Why GitHub, not Cursor Origin
+## Source of truth
 
-As of 2026-08-29, Cursor staff (deanrie, forum thread 169684) said Grok Bot cannot access Cursor Origin repos yet. Cloud agents need the repo on GitHub, connected at cursor.com > Dashboard > Integrations > GitHub. Origin hosting is optional and not required for this publish.
+- Repository: https://github.com/falkoro/tweakers-hide-users (public)
+- Privacy policy: https://github.com/falkoro/tweakers-hide-users/blob/main/PRIVACY.md
 
 ## What this extension is
 
@@ -18,7 +19,7 @@ As of 2026-08-29, Cursor staff (deanrie, forum thread 169684) said Grok Bot cann
 
 ## Account requirements (human must already have these)
 
-The agent cannot invent a Google login. Stop and ask if any of these are missing:
+The agent cannot invent a Google login. Stop and ask if any of these are missing. This wave still must **not** submit even if they are present:
 
 1. Chrome Web Store developer account at https://chrome.google.com/webstore/devconsole
 2. One-time $5 registration paid
@@ -38,7 +39,9 @@ bash scripts/pack-cws.sh
 
 The zip root must contain `manifest.json` (no wrapping folder). Include `background.js`, `boot.js`, `thu-core.js`, `content.js`, `content.css`, `popup.html`, `popup.js`, `popup.css`, `images/icon-16.png`, `images/icon-48.png`, `images/icon-128.png`. Exclude `.git`, docs, scripts, LICENSE if you want a smaller zip; including README/PRIVACY in the zip is fine but not required.
 
-Do not upload `.pem` private keys. This repo should not contain one.
+`scripts/pack-cws.ps1` strips `key` and then runs `scripts/check-package.ps1`, which fails if the zip is missing a root `manifest.json` or still contains the `key` field.
+
+Use this same zip for Microsoft Edge Add-ons. See [EDGE_ADDONS.md](EDGE_ADDONS.md). Do not upload `.pem` private keys. This repo should not contain one.
 
 ## Store listing copy
 
@@ -49,6 +52,8 @@ Do not upload `.pem` private keys. This repo should not contain one.
 **Category:** Social / Communication, or Productivity if Social is unavailable.
 
 **Language:** English (listing). Product works on a Dutch site.
+
+**Homepage / support URL:** https://github.com/falkoro/tweakers-hide-users
 
 **Description:**
 
@@ -63,6 +68,7 @@ How to use
 • Manage the list from the toolbar popup: add a name, paste one name per line, or export/import JSON.
 
 Notes
+• This extension is not affiliated with, endorsed by, or sponsored by Tweakers.net, Tweakers B.V., or Gathering of Tweakers. Independent third-party browser extension.
 • There is no built-in block list. Nobody is hidden until you hide them.
 • The list is stored in your browser (chrome.storage). It is not sent to the developer.
 • After you update the unpacked/dev copy, click Reload on the extension card. Refreshing Tweakers is not enough.
@@ -84,11 +90,8 @@ Permission justifications:
 - `tabs` — find open Tweakers tabs so a list change applies without a full reinstall
 - host `tweakers.net` / `*.tweakers.net` — read public post author markup and hide matching nodes. No other sites.
 
-Privacy policy URL: use the GitHub file URL for `PRIVACY.md` on `main` (HTTPS). Example after this repo exists:
+**Privacy policy URL:** https://github.com/falkoro/tweakers-hide-users/blob/main/PRIVACY.md
 
-`https://github.com/falkoro/tweakers-hide-users/blob/main/PRIVACY.md`
-
-If CWS rejects a blob URL, put the same text on a GitHub Pages URL or another HTTPS page the user controls.
 
 ## Assets
 
@@ -107,11 +110,13 @@ If CWS rejects a blob URL, put the same text on a GitHub Pages URL or another HT
 
 ## Do not
 
+- Submit, pay, or publish this item
 - Restart the user's Edge while they may have a meeting
 - Add default hidden users
 - Broaden host permissions
 - Check in Google credentials, CWS API tokens, or a `.pem` signing key
 - Promise a review outcome or a date
+- Add github.com URLs
 
 ## If credentials are missing
 

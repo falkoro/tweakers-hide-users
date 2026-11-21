@@ -38,4 +38,8 @@ Remove a name with Unhide, clear the list in the popup, or uninstall the extensi
 
 ## Contact
 
-Open an issue on the GitHub repository that hosts this extension.
+Open an issue on the GitHub repository that hosts this extension:
+
+https://github.com/falkoro/tweakers-hide-users/issues
+
+This privacy policy is `PRIVACY.md` at the root of that repository.

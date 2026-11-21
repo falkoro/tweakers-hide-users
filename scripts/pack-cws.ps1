@@ -1,4 +1,5 @@
 # Pack a Chrome Web Store zip. Strips the unpacked-extension `key` field.
+# Nested zip entries use forward slashes (images/icon-16.png), never backslashes.
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $outDir = Join-Path $root 'dist'
@@ -39,5 +40,29 @@ if ($manifest.PSObject.Properties['key']) {
 $manifest | ConvertTo-Json -Depth 10 | Set-Content -Path (Join-Path $stage 'manifest.json') -Encoding utf8
 
 if (Test-Path $zip) { Remove-Item $zip -Force }
-Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -Force
+
+Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+$stageFull = (Resolve-Path -LiteralPath $stage).Path.TrimEnd('\', '/')
+$archive = [System.IO.Compression.ZipFile]::Open($zip, [System.IO.Compression.ZipArchiveMode]::Create)
+try {
+    foreach ($file in (Get-ChildItem -LiteralPath $stageFull -Recurse -File)) {
+        $relative = $file.FullName.Substring($stageFull.Length).TrimStart('\', '/')
+        $entryName = $relative.Replace('\', '/')
+        if ($entryName.IndexOf([char]'\') -ge 0) {
+            throw "Refusing to write zip entry with backslash path: $entryName"
+        }
+        [void][System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+            $archive,
+            $file.FullName,
+            $entryName,
+            [System.IO.Compression.CompressionLevel]::Optimal
+        )
+    }
+} finally {
+    $archive.Dispose()
+}
+
 Write-Host "Wrote $zip"
+& (Join-Path $PSScriptRoot 'check-package.ps1')
